@@ -33,7 +33,7 @@ export async function apiRequest<T>(
   const response = await fetch(url, {
     ...fetchOptions,
     headers: {
-      apikey: API_KEY,
+      apikey: API_KEY!,
       'Content-Type': 'application/json',
       ...fetchOptions.headers,
     },
