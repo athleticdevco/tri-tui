@@ -4,7 +4,7 @@ import type { AthleteDetail } from '../api/types.js';
 import { nocToFlag } from '../utils/flags.js';
 import { calculateAge, formatYear } from '../utils/format.js';
 import { getPositionSymbol, getPositionColor } from '../utils/colors.js';
-import { calculateCareerStats, calculateSplitStrength } from '../utils/stats.js';
+import { calculateCareerStats, calculateSplitStrength, calculateForm, calculateConsistency, calculateSeasonBreakdown } from '../utils/stats.js';
 import { SplitChart } from './SplitChart.js';
 import { Spinner } from './Spinner.js';
 
@@ -45,6 +45,9 @@ export function AthleteProfile({ athlete, isLoading, rank, selectedResultIndex }
   // Calculate career stats and split strength
   const careerStats = calculateCareerStats(allResults);
   const splitStrength = calculateSplitStrength(allResults);
+  const form = calculateForm(allResults);
+  const consistency = calculateConsistency(allResults);
+  const seasons = calculateSeasonBreakdown(allResults);
 
   // Scrolling window logic - show up to 10 results at a time
   const visibleCount = 10;
@@ -130,12 +133,57 @@ export function AthleteProfile({ athlete, isLoading, rank, selectedResultIndex }
             <Text bold color="green">{careerStats.winRate}%</Text>
           </Box>
         )}
+        {form && (
+          <Box flexDirection="column">
+            <Text dimColor>Form</Text>
+            <Text bold color={form.color}>{form.symbol}</Text>
+          </Box>
+        )}
       </Box>
 
       {/* Split Strength Chart */}
       <Box marginBottom={1}>
         <SplitChart strength={splitStrength} />
       </Box>
+
+      {/* Consistency Stats */}
+      {consistency && (
+        <Box marginBottom={1} flexDirection="column">
+          <Text bold dimColor>Consistency</Text>
+          <Box gap={3}>
+            <Box flexDirection="column">
+              <Text dimColor>Finish Rate</Text>
+              <Text bold>{consistency.finishRate}%</Text>
+            </Box>
+            <Box flexDirection="column">
+              <Text dimColor>Streak</Text>
+              <Text bold>{consistency.currentStreak}</Text>
+            </Box>
+            <Box flexDirection="column">
+              <Text dimColor>Rating</Text>
+              <Text bold color={consistency.color}>{consistency.rating}</Text>
+            </Box>
+          </Box>
+        </Box>
+      )}
+
+      {/* Season Summary */}
+      {seasons.length > 1 && (
+        <Box flexDirection="column" marginBottom={1}>
+          <Text bold dimColor>Season Summary</Text>
+          <Box flexDirection="column">
+            {seasons.slice(0, 3).map(s => (
+              <Box key={s.year} gap={2}>
+                <Text>{s.year}</Text>
+                <Text dimColor>{s.races} races</Text>
+                {s.wins > 0 && <Text color="yellow">{s.wins}W</Text>}
+                {s.podiums > 0 && <Text color="cyan">{s.podiums}P</Text>}
+                {s.avgPosition && <Text dimColor>avg #{s.avgPosition}</Text>}
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      )}
 
       {/* Recent Results */}
       {results.length > 0 && (

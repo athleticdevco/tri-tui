@@ -2,6 +2,36 @@
 
 import type { RaceResult, AthleteDetail } from '../api/types.js';
 
+// Form/Trend types
+export type FormTrend = 'improving' | 'stable' | 'declining';
+
+export interface FormIndicator {
+  trend: FormTrend;
+  recentAvg: number;      // avg position last 5 races
+  previousAvg: number;    // avg position 5 races before that
+  symbol: string;         // ↗ → ↘
+  color: string;          // green, yellow, red
+}
+
+// Consistency types
+export interface ConsistencyStats {
+  finishRate: number;      // % of races finished (non-DNF)
+  positionStdDev: number;  // lower = more consistent
+  currentStreak: number;   // consecutive finishes
+  bestStreak: number;      // longest finish streak
+  rating: string;          // "Elite", "Consistent", "Variable", "Inconsistent"
+  color: string;
+}
+
+// Season breakdown types
+export interface SeasonStats {
+  year: number;
+  races: number;
+  wins: number;
+  podiums: number;
+  avgPosition: number | null;
+}
+
 export interface CareerStats {
   totalRaces: number;
   bestFinish: number | null;
@@ -126,6 +156,123 @@ export function getStrengthLabel(value: number): { label: string; color: string 
   if (value >= 40) return { label: 'Average', color: 'yellow' };
   if (value >= 20) return { label: 'Developing', color: 'red' };
   return { label: 'Weak', color: 'red' };
+}
+
+export function calculateForm(results: RaceResult[]): FormIndicator | null {
+  // Need at least 6 results to compare
+  if (!results || results.length < 6) return null;
+
+  const positions = results
+    .map(r => typeof r.position === 'number' ? r.position : parseInt(String(r.position), 10))
+    .filter(p => !isNaN(p) && p > 0);
+
+  if (positions.length < 6) return null;
+
+  // Recent 5 vs previous 5
+  const recent5 = positions.slice(0, 5);
+  const previous5 = positions.slice(5, 10);
+
+  const recentAvg = recent5.reduce((a, b) => a + b, 0) / recent5.length;
+  const previousAvg = previous5.reduce((a, b) => a + b, 0) / previous5.length;
+
+  const diff = previousAvg - recentAvg; // positive = improving (lower position = better)
+
+  let trend: FormTrend, symbol: string, color: string;
+  if (diff > 2) {
+    trend = 'improving'; symbol = '↗'; color = 'green';
+  } else if (diff < -2) {
+    trend = 'declining'; symbol = '↘'; color = 'red';
+  } else {
+    trend = 'stable'; symbol = '→'; color = 'yellow';
+  }
+
+  return { trend, recentAvg, previousAvg, symbol, color };
+}
+
+export function calculateConsistency(results: RaceResult[]): ConsistencyStats | null {
+  if (!results || results.length < 3) return null;
+
+  const allPositions = results.map(r => {
+    const p = typeof r.position === 'number' ? r.position : parseInt(String(r.position), 10);
+    return isNaN(p) || p <= 0 ? null : p; // null = DNF
+  });
+
+  const validPositions = allPositions.filter((p): p is number => p !== null);
+  if (validPositions.length === 0) return null;
+
+  const finishRate = Math.round((validPositions.length / allPositions.length) * 100);
+
+  // Standard deviation of positions
+  const mean = validPositions.reduce((a, b) => a + b, 0) / validPositions.length;
+  const variance = validPositions.reduce((sum, p) => sum + Math.pow(p - mean, 2), 0) / validPositions.length;
+  const positionStdDev = Math.round(Math.sqrt(variance) * 10) / 10;
+
+  // Current streak: count from most recent until first DNF
+  let currentStreak = 0;
+  for (let i = 0; i < allPositions.length; i++) {
+    if (allPositions[i] !== null) {
+      currentStreak++;
+    } else {
+      break;
+    }
+  }
+
+  // Best streak: longest consecutive finish run
+  let bestStreak = 0, streak = 0;
+  for (const pos of allPositions) {
+    if (pos !== null) {
+      streak++;
+      if (streak > bestStreak) bestStreak = streak;
+    } else {
+      streak = 0;
+    }
+  }
+
+  // Rating based on finish rate and std dev
+  let rating: string, color: string;
+  if (finishRate >= 95 && positionStdDev < 5) {
+    rating = 'Elite'; color = 'green';
+  } else if (finishRate >= 85 && positionStdDev < 8) {
+    rating = 'Consistent'; color = 'cyan';
+  } else if (finishRate >= 70 && positionStdDev < 12) {
+    rating = 'Variable'; color = 'yellow';
+  } else {
+    rating = 'Inconsistent'; color = 'red';
+  }
+
+  return { finishRate, positionStdDev, currentStreak, bestStreak, rating, color };
+}
+
+export function calculateSeasonBreakdown(results: RaceResult[]): SeasonStats[] {
+  if (!results || results.length === 0) return [];
+
+  const byYear = new Map<number, RaceResult[]>();
+
+  for (const result of results) {
+    const year = new Date(result.event_date).getFullYear();
+    if (!byYear.has(year)) byYear.set(year, []);
+    byYear.get(year)!.push(result);
+  }
+
+  const seasons: SeasonStats[] = [];
+
+  for (const [year, yearResults] of byYear) {
+    const positions = yearResults
+      .map(r => typeof r.position === 'number' ? r.position : parseInt(String(r.position), 10))
+      .filter(p => !isNaN(p) && p > 0);
+
+    seasons.push({
+      year,
+      races: positions.length,
+      wins: positions.filter(p => p === 1).length,
+      podiums: positions.filter(p => p <= 3).length,
+      avgPosition: positions.length > 0
+        ? Math.round((positions.reduce((a, b) => a + b, 0) / positions.length) * 10) / 10
+        : null,
+    });
+  }
+
+  return seasons.sort((a, b) => b.year - a.year); // most recent first
 }
 
 export interface ComparisonResult {
