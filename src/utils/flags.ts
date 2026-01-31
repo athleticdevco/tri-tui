@@ -41,7 +41,8 @@ const NOC_TO_ISO: Record<string, string> = {
   BAR: 'BB',
 };
 
-export function nocToFlag(noc: string): string {
+export function nocToFlag(noc: string | undefined | null): string {
+  if (!noc) return '';
   const iso = NOC_TO_ISO[noc.toUpperCase()] || noc;
 
   // Convert ISO code to regional indicator symbols (emoji flags)

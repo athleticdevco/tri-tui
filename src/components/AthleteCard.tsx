@@ -20,26 +20,29 @@ export function AthleteCard({
 }: AthleteCardProps) {
   const flag = nocToFlag(athlete.athlete_noc);
   const name = athlete.athlete_full_name || athlete.athlete_title;
-  const displayName = compact ? truncate(name, 20) : name;
+  const displayName = compact ? truncate(name, 18) : name;
 
   const rankColor = rank ? getPositionColor(rank) : 'white';
 
   return (
     <Box>
-      <Text>
-        {isSelected ? (
-          <Text color="cyan" bold>{'▸ '}</Text>
-        ) : (
-          <Text>{'  '}</Text>
-        )}
-        {rank && (
-          <Text color={rankColor}>
-            {`#${rank.toString().padStart(2, ' ')} `}
-          </Text>
-        )}
-        <Text bold={isSelected}>{displayName}</Text>
-        {flag && <Text> {flag}</Text>}
+      {isSelected ? (
+        <Text color="cyan" bold>{'› '}</Text>
+      ) : (
+        <Text dimColor>{'  '}</Text>
+      )}
+      {rank && (
+        <Text color={rankColor} dimColor={!isSelected}>
+          {`${rank.toString().padStart(2, ' ')} `}
+        </Text>
+      )}
+      <Text bold={isSelected} color={isSelected ? 'white' : undefined} dimColor={!isSelected}>
+        {displayName.padEnd(18)}
       </Text>
+      {/* Use fixed width box for flag to ensure consistent alignment */}
+      <Box width={3}>
+        <Text dimColor={!isSelected}>{flag || ''}</Text>
+      </Box>
     </Box>
   );
 }

@@ -79,5 +79,66 @@ export interface AthleteResponse {
   data: AthleteDetail;
 }
 
-export type View = 'rankings' | 'search' | 'athlete';
+export type View = 'rankings' | 'search' | 'athlete' | 'events' | 'event-programs' | 'race-results';
 export type Column = 'men' | 'women';
+export type SearchContext = 'athletes' | 'events';
+
+// Event types
+export interface TriEvent {
+  event_id: number;
+  event_title: string;
+  event_date: string;
+  event_venue: string | null;
+  event_country: string | null;
+  event_country_noc?: string;
+  event_listing?: string;
+  event_categories?: string[];
+}
+
+export interface EventProgram {
+  prog_id: number;
+  prog_name: string;
+  prog_date?: string;
+  prog_distance?: string;
+  results_status?: string;
+  results_published?: boolean;
+}
+
+export interface RaceResultEntry {
+  position: number | string;
+  athlete_id: number;
+  athlete_title: string;
+  athlete_noc: string;
+  total_time?: string;
+  swim_time?: string;
+  t1_time?: string;
+  bike_time?: string;
+  t2_time?: string;
+  run_time?: string;
+  // API returns splits as array of time strings: [swim, T1, bike, T2, run]
+  splits?: string[];
+}
+
+export interface EventSearchResponse {
+  code: number;
+  status: string;
+  current_page: number;
+  data: TriEvent[];
+  total: number;
+}
+
+export interface EventProgramsResponse {
+  code: number;
+  status: string;
+  data: EventProgram[];
+}
+
+export interface RaceResultsResponse {
+  code: number;
+  status: string;
+  data: {
+    prog_id: number;
+    prog_name: string;
+    results: RaceResultEntry[];
+  };
+}

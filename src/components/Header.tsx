@@ -1,25 +1,62 @@
 import React from 'react';
 import { Box, Text } from 'ink';
+import { getLogoColors } from '../utils/theme.js';
 
-interface HeaderProps {
-  title?: string;
-}
+// Block-style TRI logo
+// Colors auto-flip based on terminal theme (dark/light)
+export function Header() {
+  const colors = getLogoColors();
 
-export function Header({ title = 'TRI STATS' }: HeaderProps) {
   return (
-    <Box
-      flexDirection="column"
-      borderStyle="round"
-      borderColor="cyan"
-      paddingX={2}
-      marginBottom={1}
-    >
-      <Box justifyContent="center">
-        <Text bold color="cyan">
-          {title}
+    <Box flexDirection="column" alignItems="center" marginBottom={1}>
+      <Box flexDirection="column">
+        <Text>
+          <Text color={colors.primary} bold>█████</Text>
+          <Text color={colors.shadow}>▄</Text>
+          <Text> </Text>
+          <Text color={colors.primary} bold>████</Text>
+          <Text color={colors.shadow}>▄</Text>
+          <Text>  </Text>
+          <Text color={colors.primary} bold>█</Text>
         </Text>
-        <Text dimColor> - WTCS Rankings</Text>
+        <Text>
+          <Text color={colors.primary} bold>  █  </Text>
+          <Text color={colors.shadow}>█</Text>
+          <Text> </Text>
+          <Text color={colors.primary} bold>█   █</Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text color={colors.primary} bold> █</Text>
+        </Text>
+        <Text>
+          <Text color={colors.primary} bold>  █  </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text color={colors.primary} bold>████</Text>
+          <Text color={colors.shadow}>▀</Text>
+          <Text>  </Text>
+          <Text color={colors.primary} bold> █</Text>
+        </Text>
+        <Text>
+          <Text color={colors.primary} bold>  █  </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text color={colors.primary} bold>█  █</Text>
+          <Text> </Text>
+          <Text>  </Text>
+          <Text color={colors.primary} bold> █</Text>
+        </Text>
+        <Text>
+          <Text color={colors.primary} bold>  █  </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text color={colors.primary} bold>█   █</Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text color={colors.primary} bold>▄█▄</Text>
+        </Text>
       </Box>
+      <Text color={colors.tagline}>World Triathlon Rankings</Text>
     </Box>
   );
 }

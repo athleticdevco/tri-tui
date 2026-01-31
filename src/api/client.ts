@@ -1,7 +1,14 @@
 // HTTP client for World Triathlon API
 
 const API_BASE = 'https://api.triathlon.org/v1';
-const API_KEY = '3030d8bd3cf886d0799605e0ef380168';
+const API_KEY = process.env.TRIATHLON_API_KEY;
+
+if (!API_KEY) {
+  throw new Error(
+    'TRIATHLON_API_KEY environment variable is required. ' +
+    'Get your free API key at https://developers.triathlon.org'
+  );
+}
 
 interface FetchOptions extends RequestInit {
   params?: Record<string, string | number>;

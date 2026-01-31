@@ -23,7 +23,7 @@ export function RankingsView({
 }: RankingsViewProps) {
   if (isLoading) {
     return (
-      <Box justifyContent="center" marginY={2}>
+      <Box justifyContent="center" marginY={1}>
         <Spinner label="Loading rankings..." />
       </Box>
     );
@@ -38,57 +38,50 @@ export function RankingsView({
   }
 
   return (
-    <Box flexDirection="row" gap={4}>
+    <Box flexDirection="row" gap={2}>
       {/* Men's column */}
-      <Box flexDirection="column" flexGrow={1}>
-        <Box marginBottom={1}>
-          <Text bold color={activeColumn === 'men' ? 'cyan' : 'white'}>
-            MEN
-          </Text>
-          {activeColumn === 'men' && <Text color="cyan"> ◀</Text>}
-        </Box>
-        <Box
-          flexDirection="column"
-          borderStyle={activeColumn === 'men' ? 'single' : undefined}
-          borderColor="cyan"
-          paddingX={activeColumn === 'men' ? 1 : 0}
-        >
-          {men.map((athlete, index) => (
-            <AthleteCard
-              key={athlete.athlete_id}
-              athlete={athlete}
-              rank={index + 1}
-              isSelected={activeColumn === 'men' && index === selectedIndex}
-              compact
-            />
-          ))}
-        </Box>
+      {/* Width: selector(2) + rank(3) + name(18) + flag(3) = 26 */}
+      <Box flexDirection="column">
+        <Text bold color={activeColumn === 'men' ? 'cyan' : 'gray'}>
+          {'MEN'.padEnd(26)}
+        </Text>
+        <Text dimColor>{'─'.repeat(26)}</Text>
+        {men.map((athlete, index) => (
+          <AthleteCard
+            key={athlete.athlete_id}
+            athlete={athlete}
+            rank={index + 1}
+            isSelected={activeColumn === 'men' && index === selectedIndex}
+            compact
+          />
+        ))}
+      </Box>
+
+      {/* Divider */}
+      <Box flexDirection="column">
+        <Text dimColor>│</Text>
+        <Text dimColor>│</Text>
+        {men.map((_, i) => (
+          <Text key={i} dimColor>│</Text>
+        ))}
       </Box>
 
       {/* Women's column */}
-      <Box flexDirection="column" flexGrow={1}>
-        <Box marginBottom={1}>
-          {activeColumn === 'women' && <Text color="cyan">▶ </Text>}
-          <Text bold color={activeColumn === 'women' ? 'cyan' : 'white'}>
-            WOMEN
-          </Text>
-        </Box>
-        <Box
-          flexDirection="column"
-          borderStyle={activeColumn === 'women' ? 'single' : undefined}
-          borderColor="cyan"
-          paddingX={activeColumn === 'women' ? 1 : 0}
-        >
-          {women.map((athlete, index) => (
-            <AthleteCard
-              key={athlete.athlete_id}
-              athlete={athlete}
-              rank={index + 1}
-              isSelected={activeColumn === 'women' && index === selectedIndex}
-              compact
-            />
-          ))}
-        </Box>
+      {/* Width: selector(2) + rank(3) + name(18) + flag(3) = 26 */}
+      <Box flexDirection="column">
+        <Text bold color={activeColumn === 'women' ? 'cyan' : 'gray'}>
+          {'WOMEN'.padEnd(26)}
+        </Text>
+        <Text dimColor>{'─'.repeat(26)}</Text>
+        {women.map((athlete, index) => (
+          <AthleteCard
+            key={athlete.athlete_id}
+            athlete={athlete}
+            rank={index + 1}
+            isSelected={activeColumn === 'women' && index === selectedIndex}
+            compact
+          />
+        ))}
       </Box>
     </Box>
   );
