@@ -10,6 +10,23 @@ A terminal UI for browsing World Triathlon stats and rankings.
       █    █   █  ▄█▄
 ```
 
+## Screenshots
+
+### Rankings View
+Browse WTCS standings with country flags and easy navigation between men's and women's rankings.
+
+![Rankings View](screenshots/rankings.png)
+
+### Athlete Profile
+View detailed athlete stats including win rate, consistency metrics, and recent race results.
+
+![Athlete Profile](screenshots/athlete.png)
+
+### Race Results
+Explore race results with swim/bike/run split times color-coded by performance.
+
+![Race Results](screenshots/event.png)
+
 ## Features
 
 - **WTCS Rankings** - Browse current World Triathlon Championship Series standings for men and women
