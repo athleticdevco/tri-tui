@@ -3,38 +3,30 @@
 A terminal UI for browsing World Triathlon stats and rankings.
 
 ```
-    █████▄ ████▄  █
-      █  █ █   █   █
-      █    ████▀   █
-      █    █  █    █
-      █    █   █  ▄█▄
+▄▄▄▄▄  ▄▄▄▄   ▄
+  ▄    ▄   ▄   ▄
+  ▄    ▄▄▄▄    ▄
+  ▄    ▄  ▄    ▄
+  ▄    ▄   ▄  ▄▄▄
 ```
-
-## Screenshots
-
-### Rankings View
-Browse WTCS standings with country flags and easy navigation between men's and women's rankings.
-
-![Rankings View](screenshots/rankings.png)
-
-### Athlete Profile
-View detailed athlete stats including win rate, consistency metrics, and recent race results.
-
-![Athlete Profile](screenshots/athlete.png)
-
-### Race Results
-Explore race results with swim/bike/run split times color-coded by performance.
-
-![Race Results](screenshots/event.png)
 
 ## Features
 
 - **WTCS Rankings** - Browse current World Triathlon Championship Series standings for men and women
-- **Athlete Search** - Search for any athlete in the World Triathlon database
+
+  ![Rankings View](screenshots/rankings.png)
+
 - **Athlete Profiles** - View detailed athlete info including recent results and personal bests
+
+  ![Athlete Profile](screenshots/athlete.png)
+
+- **Race Results** - View detailed results with swim/bike/run splits and visual charts
+
+  ![Race Results](screenshots/event.png)
+
+- **Athlete Search** - Search for any athlete in the World Triathlon database
 - **Athlete Comparison** - Compare two athletes side-by-side with stats and split analysis
 - **Event Browser** - Search events and browse race results
-- **Race Results** - View detailed results with swim/bike/run splits and visual charts
 - **Keyboard-Driven** - Full keyboard navigation with vim-style bindings (j/k)
 
 ## Installation

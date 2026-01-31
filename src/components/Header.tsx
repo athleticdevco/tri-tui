@@ -56,7 +56,6 @@ export function Header() {
           <Text color={colors.primary} bold>▄█▄</Text>
         </Text>
       </Box>
-      <Text color={colors.tagline}>World Triathlon Rankings</Text>
     </Box>
   );
 }
