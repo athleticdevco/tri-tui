@@ -7,9 +7,11 @@ interface StatusBarProps {
   isSearchFocused?: boolean;
   searchContext?: SearchContext;
   isCommandMode?: boolean;
+  isCompareMode?: boolean;      // Selecting second athlete for comparison
+  isCompareView?: boolean;      // Viewing side-by-side comparison
 }
 
-export function StatusBar({ view, isSearchFocused, searchContext = 'athletes', isCommandMode = false }: StatusBarProps) {
+export function StatusBar({ view, isSearchFocused, searchContext = 'athletes', isCommandMode = false, isCompareMode = false, isCompareView = false }: StatusBarProps) {
   const hints: Record<View, string[]> = {
     rankings: ['[↑↓/jk] Navigate', '[Tab] Switch column', '[Enter] View', '[/] Commands', '[r] Refresh', '[q] Quit'],
     search: ['[↑↓] Navigate', '[Enter] Select', '[Esc] Cancel'],
@@ -24,6 +26,12 @@ export function StatusBar({ view, isSearchFocused, searchContext = 'athletes', i
   if (isCommandMode) {
     // Command palette mode
     currentHints = ['[↑↓] Navigate', '[Enter] Select command', '[Esc] Cancel'];
+  } else if (isCompareView) {
+    // Viewing side-by-side comparison - only back/quit available
+    currentHints = ['[Esc] Back', '[q] Quit'];
+  } else if (isCompareMode) {
+    // Selecting second athlete for comparison
+    currentHints = ['[↑↓/jk] Navigate', '[Enter] Select', '[Esc] Cancel'];
   } else if (isSearchFocused) {
     if (searchContext === 'events') {
       currentHints = ['[↑↓] Navigate', '[Enter] Select', '[Shift+Tab] Athletes', '[/] Commands', '[Esc] Cancel'];

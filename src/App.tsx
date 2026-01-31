@@ -691,6 +691,8 @@ export function App() {
           isSearchFocused={isSearchFocused}
           searchContext={searchContext}
           isCommandMode={isCommandMode}
+          isCompareMode={isCompareMode}
+          isCompareView={!!compareAthlete && !isCompareMode}
         />
       )}
     </Box>
