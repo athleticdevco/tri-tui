@@ -88,10 +88,6 @@ This app uses the official [World Triathlon API](https://developers.triathlon.or
 
 **Note:** This is an unofficial app and is not affiliated with World Triathlon. Data is provided for personal use only.
 
-## Built With
-
-This project was built with [Factory's Droid](https://factory.ai/) - an AI software engineering agent.
-
 ## License
 
 MIT
