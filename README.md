@@ -23,9 +23,15 @@ A terminal UI for browsing World Triathlon stats and rankings.
 ## Installation
 
 ```bash
+# Clone the repository
 git clone https://github.com/athleticdevco/tri-tui.git
 cd tri-tui
+
+# Install dependencies
 npm install
+
+# Link globally (optional)
+npm link
 ```
 
 ## Setup
@@ -44,13 +50,11 @@ cp .env.example .env
 ## Usage
 
 ```bash
+# Run directly
 npm start
-```
 
-Or run the CLI directly:
-
-```bash
-./bin/tri.js
+# Or if linked globally
+tri
 ```
 
 ## Keyboard Controls
