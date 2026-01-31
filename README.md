@@ -2,7 +2,13 @@
 
 A terminal UI for browsing World Triathlon stats and rankings.
 
-![TRI](screenshots/tri.png)
+```
+▄▄▄▄▄  ▄▄▄▄   ▄
+  ▄    ▄   ▄   ▄
+  ▄    ▄▄▄▄    ▄
+  ▄    ▄  ▄    ▄
+  ▄    ▄   ▄  ▄▄▄
+```
 
 ## Features
 
