@@ -14,15 +14,15 @@ A terminal UI for browsing World Triathlon stats and rankings.
 
 - **WTCS Rankings** - Browse current World Triathlon Championship Series standings for men and women
 
-  ![Rankings View](screenshots/rankings.png)
+  ![Rankings View](screenshots/rankings.png?v=2)
 
 - **Athlete Profiles** - View detailed athlete info including recent results and personal bests
 
-  ![Athlete Profile](screenshots/athlete.png)
+  ![Athlete Profile](screenshots/athlete.png?v=2)
 
 - **Race Results** - View detailed results with swim/bike/run splits and visual charts
 
-  ![Race Results](screenshots/event.png)
+  ![Race Results](screenshots/event.png?v=2)
 
 - **Athlete Search** - Search for any athlete in the World Triathlon database
 - **Athlete Comparison** - Compare two athletes side-by-side with stats and split analysis
