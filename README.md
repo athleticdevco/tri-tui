@@ -3,11 +3,11 @@
 A terminal UI for browsing World Triathlon stats and rankings.
 
 ```
-▄▄▄▄▄  ▄▄▄▄   ▄
-  ▄    ▄   ▄   ▄
-  ▄    ▄▄▄▄    ▄
-  ▄    ▄  ▄    ▄
-  ▄    ▄   ▄  ▄▄▄
+████████  ████████   ██
+   ██     ██    ██   ██
+   ██     ████████   ██
+   ██     ██  ██     ██
+   ██     ██    ██   ██
 ```
 
 ## Features
