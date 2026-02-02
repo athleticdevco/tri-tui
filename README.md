@@ -22,7 +22,7 @@ A terminal UI for browsing World Triathlon stats and rankings.
 
 **Race Results** - View detailed results with swim/bike/run splits and visual charts
 
-[Race Results](screenshots/event.png?v=2)
+![Race Results](screenshots/event.png?v=2)
 
 - **Athlete Search** - Search for any athlete in the World Triathlon database
 - **Athlete Comparison** - Compare two athletes side-by-side with stats and split analysis
